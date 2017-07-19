@@ -46,10 +46,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8UW-jI-gyr">
-                                <rect key="frame" x="0.0" y="120" width="375" height="498"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </tableView>
                             <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B1R-2P-G02">
                                 <rect key="frame" x="0.0" y="20" width="375" height="100"/>
                                 <subviews>
@@ -102,16 +98,49 @@
                                     <constraint firstItem="aev-kh-jQA" firstAttribute="leading" secondItem="B1R-2P-G02" secondAttribute="leadingMargin" id="qfq-nz-13U"/>
                                 </constraints>
                             </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8UW-jI-gyr">
+                                <rect key="frame" x="0.0" y="120" width="375" height="443"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                            <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ESc-yw-H1t">
+                                <rect key="frame" x="0.0" y="563" width="375" height="55"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ngd-Kz-z6O">
+                                        <rect key="frame" x="112.5" y="12.5" width="150" height="30"/>
+                                        <color key="backgroundColor" red="1" green="0.77622811920000001" blue="0.8081632245" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="150" id="aEW-pc-vBn"/>
+                                        </constraints>
+                                        <state key="normal" title="Sign Out">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="15"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="ngd-Kz-z6O" firstAttribute="centerX" secondItem="ESc-yw-H1t" secondAttribute="centerX" id="Ayp-Kw-IfI"/>
+                                    <constraint firstItem="ngd-Kz-z6O" firstAttribute="centerY" secondItem="ESc-yw-H1t" secondAttribute="centerY" id="ebA-Yl-JUD"/>
+                                    <constraint firstAttribute="height" constant="55" id="wIK-0c-oFT"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="B1R-2P-G02" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="4fP-ng-8ra"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="8UW-jI-gyr" secondAttribute="bottom" id="H9L-Pd-upv"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="ESc-yw-H1t" secondAttribute="bottom" id="K2L-xN-gwF"/>
                             <constraint firstItem="B1R-2P-G02" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="aCQ-X0-e0w"/>
+                            <constraint firstItem="ESc-yw-H1t" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="aK1-8e-p4e"/>
                             <constraint firstAttribute="trailing" secondItem="8UW-jI-gyr" secondAttribute="trailing" id="dEd-PB-zqE"/>
                             <constraint firstItem="8UW-jI-gyr" firstAttribute="top" secondItem="B1R-2P-G02" secondAttribute="bottom" id="f8M-iB-7zV"/>
+                            <constraint firstItem="ESc-yw-H1t" firstAttribute="top" secondItem="8UW-jI-gyr" secondAttribute="bottom" id="ohO-eZ-5L0"/>
                             <constraint firstAttribute="trailing" secondItem="B1R-2P-G02" secondAttribute="trailing" id="otK-xn-F8F"/>
                             <constraint firstItem="8UW-jI-gyr" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="t0k-9I-HEu"/>
+                            <constraint firstAttribute="trailing" secondItem="ESc-yw-H1t" secondAttribute="trailing" id="zK2-FP-AbS"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Settings" image="icon-settings" id="nxW-Cs-GdJ"/>
@@ -122,7 +151,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1198" y="1024"/>
+            <point key="canvasLocation" x="1197.5999999999999" y="1023.2383808095952"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="fF4-bi-z7e">

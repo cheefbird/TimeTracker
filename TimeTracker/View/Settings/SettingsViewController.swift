@@ -13,7 +13,7 @@ class SettingsViewController: UIViewController {
   
   // MARK: - Outlets
   @IBOutlet weak var firstNameLabel: UILabel!
-  @IBOutlet weak var lastNameLabel: UILabel!  
+  @IBOutlet weak var lastNameLabel: UILabel!
   
   
   // MARK: - Properties
