@@ -7,8 +7,13 @@
 //
 
 import UIKit
+import RealmSwift
 
 class SettingsViewController: UIViewController {
+  
+  // MARK: - Outlets
+  @IBOutlet weak var firstNameLabel: UILabel!
+  @IBOutlet weak var lastNameLabel: UILabel!
   
   // MARK: - Properties
   var user: User?
@@ -16,19 +21,16 @@ class SettingsViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    
+    refreshView()
     
   }
   
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     
-    if let existingUser = User.retrieve() {
-      user = existingUser
-    } else {
-      presentLogin()
-    }
+    
   }
+  
   
   
   // MARK: - Methods
@@ -36,12 +38,25 @@ class SettingsViewController: UIViewController {
     
     let storyboard = UIStoryboard(name: "Main", bundle: nil)
     let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
-    
-    let authenticationManager = AuthenticationManager()
-    loginVC.authenticationManager = authenticationManager
+
     
     self.present(loginVC, animated: true)
     
   }
   
+  func refreshView() {
+    
+    guard let savedUser = User.retrieve() else {
+      return presentLogin()
+    }
+    
+    user = savedUser
+    
+    firstNameLabel.text = user?.firstName
+    lastNameLabel.text = user?.lastName
+    
+  }
+  
+  
 }
+

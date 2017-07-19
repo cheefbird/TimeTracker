@@ -23,22 +23,45 @@ class LoginViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    authenticationManager = AuthenticationManager()
+    
     let status = authenticationManager.helperText.asDriver()
     
     status
       .drive(statusLabel.rx.text)
       .disposed(by: disposeBag)
     
-    let authRequest = loginButton.rx.tap.asObservable()
-      .withLatestFrom(keyTextField.rx.text)
-      .filter { ($0 ?? "").characters.count > 0 }
-      .flatMap { key in
-        return self.authenticationManager.authorizationRequest(withKey: key ?? "Error")
-      }
+    let authKey = loginButton.rx.tap.asObservable()
+      .withLatestFrom(keyTextField.rx.text.orEmpty)
+      .filter { $0.characters.count > 0 }
     
-
+    
+    authKey
+      .subscribe(onNext: { [weak self] key in
+        self?.authenticationManager.authorizeUser(withKey: key)
+      })
+      .disposed(by: disposeBag)
+    
+    authenticationManager.authStatus.asObservable()
+//      .observeOn(MainScheduler.instance)
+      .filter { $0 }
+      .subscribe(onNext: { [weak self] _ in
+        DispatchQueue.main.async {
+          let presentingVC = self?.presenter as! SettingsViewController
+          presentingVC.dismiss(animated: true) {
+            presentingVC.refreshView()
+          }
+        }
+      })
+      .disposed(by: disposeBag)
     
   }
+  
+  
+  private lazy var presenter: UIViewController = {
+    let presenterVC = self.presentingViewController as! SettingsViewController
+    return presenterVC
+  }()
   
 }
 

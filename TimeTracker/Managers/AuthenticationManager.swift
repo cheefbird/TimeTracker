@@ -8,12 +8,15 @@
 
 import Foundation
 import RxSwift
+import RxCocoa
 import RxAlamofire
 import SwiftyJSON
 import RealmSwift
 
 
 class AuthenticationManager {
+  
+  let disposeBag = DisposeBag()
   
   // MARK: - Observable Properties
   let helperText = Variable<String>("Login using your API key to continue.")
@@ -22,29 +25,57 @@ class AuthenticationManager {
   // MARK: - Observable Methods
   
   
-  func authorizationRequest(withKey key: String) -> Observable<User> {
+  func authorizeUser(withKey key: String) {
     
-    return RxAlamofire
+    helperText.value = "Attempting login ..."
+    
+    let request = RxAlamofire
       .requestJSON(TeamworkAPI.Router.authenticate(key))
+      .subscribeOn(MainScheduler.instance)
       .filter { (response, _) in
+        print(response.statusCode)
         return 200..<300 ~= response.statusCode
       }
       .map { (_, data) -> JSON in
         let json = data as! [String: Any]
-        return JSON(json)
+        let account = json["account"] as! [String: Any]
+        print(account)
+        return JSON(account)
       }
       .map { json -> User in
         let user = User(fromJSON: json)
         self.saveUser(user)
         return user
-    }
+      }
+      .share()
+    
+    request
+      .map { user -> Bool in
+        return user.hasAuthenticated
+      }
+      .bind(to: authStatus)
+      .disposed(by: disposeBag)
+    
+    request
+      .map { user -> Bool in
+        return user.hasAuthenticated
+      }
+      .subscribe(onNext: { result in
+        print("Auth from user call: \(result)")
+        self.helperText.value = "Login successful!"
+      })
+      .disposed(by: disposeBag)
+    
+    
+    
     
   }
   
-//  func authAsData(key: String) -> Observable<User> {
-//    let user = RxAlamofire.request(TeamworkAPI.Router.authenticate(key))
-//      .responseJSON()
-//  }
+  
+  //  func authAsData(key: String) -> Observable<User> {
+  //    let user = RxAlamofire.request(TeamworkAPI.Router.authenticate(key))
+  //      .responseJSON()
+  //  }
   
   
   // MARK: - Helper

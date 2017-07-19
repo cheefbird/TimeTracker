@@ -115,6 +115,10 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Settings" image="icon-settings" id="nxW-Cs-GdJ"/>
+                    <connections>
+                        <outlet property="firstNameLabel" destination="7mY-3F-bBa" id="ZTe-NT-gG5"/>
+                        <outlet property="lastNameLabel" destination="Kdn-aU-HWo" id="EbI-bs-y5p"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
