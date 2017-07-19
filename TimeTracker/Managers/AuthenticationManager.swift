@@ -33,13 +33,11 @@ class AuthenticationManager {
       .requestJSON(TeamworkAPI.Router.authenticate(key))
       .subscribeOn(MainScheduler.instance)
       .filter { (response, _) in
-        print(response.statusCode)
         return 200..<300 ~= response.statusCode
       }
       .map { (_, data) -> JSON in
         let json = data as! [String: Any]
         let account = json["account"] as! [String: Any]
-        print(account)
         return JSON(account)
       }
       .map { json -> User in
@@ -47,6 +45,7 @@ class AuthenticationManager {
         self.saveUser(user)
         return user
       }
+      .catchErrorJustReturn(User.empty)
       .share()
     
     request
@@ -56,13 +55,18 @@ class AuthenticationManager {
       .bind(to: authStatus)
       .disposed(by: disposeBag)
     
+    
     request
       .map { user -> Bool in
         return user.hasAuthenticated
       }
       .subscribe(onNext: { result in
-        print("Auth from user call: \(result)")
-        self.helperText.value = "Login successful!"
+        if !result {
+          self.helperText.value = "Invalid API key. Please try again ..."
+        } else {
+          self.helperText.value = "Login successful!"
+        }
+        
       })
       .disposed(by: disposeBag)
     
@@ -72,10 +76,10 @@ class AuthenticationManager {
   }
   
   
-  //  func authAsData(key: String) -> Observable<User> {
-  //    let user = RxAlamofire.request(TeamworkAPI.Router.authenticate(key))
-  //      .responseJSON()
-  //  }
+  deinit {
+    print("ALERT ** AuthenticationManager Deinitialized ** ALERT")
+  }
+  
   
   
   // MARK: - Helper

@@ -13,24 +13,28 @@ class SettingsViewController: UIViewController {
   
   // MARK: - Outlets
   @IBOutlet weak var firstNameLabel: UILabel!
-  @IBOutlet weak var lastNameLabel: UILabel!
+  @IBOutlet weak var lastNameLabel: UILabel!  
+  
   
   // MARK: - Properties
   var user: User?
   
+  
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    refreshView()
+    firstNameLabel.text = user?.firstName ?? ""
+    lastNameLabel.text = user?.lastName ?? ""
     
   }
   
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     
+    refreshView()
     
   }
-  
   
   
   // MARK: - Methods

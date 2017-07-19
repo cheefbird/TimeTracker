@@ -36,6 +36,7 @@ class LoginViewController: UIViewController {
       .filter { $0.characters.count > 0 }
     
     
+    
     authKey
       .subscribe(onNext: { [weak self] key in
         self?.authenticationManager.authorizeUser(withKey: key)
@@ -43,24 +44,28 @@ class LoginViewController: UIViewController {
       .disposed(by: disposeBag)
     
     authenticationManager.authStatus.asObservable()
-//      .observeOn(MainScheduler.instance)
+      .observeOn(MainScheduler.instance)
       .filter { $0 }
       .subscribe(onNext: { [weak self] _ in
-        DispatchQueue.main.async {
-          let presentingVC = self?.presenter as! SettingsViewController
+          guard let presentingVC = self?.presenter else { return }
           presentingVC.dismiss(animated: true) {
             presentingVC.refreshView()
           }
-        }
       })
       .disposed(by: disposeBag)
     
   }
   
+  deinit {
+    print("ALERT ** LoginViewController Deinitialized ** ALERT")
+  }
   
-  private lazy var presenter: UIViewController = {
-    let presenterVC = self.presentingViewController as! SettingsViewController
-    return presenterVC
+  
+  
+  private lazy var presenter: SettingsViewController? = {
+    guard let presentingVC = self.presentingViewController as? UITabBarController,
+      let actualPresenter = presentingVC.selectedViewController as? SettingsViewController else { return nil }
+    return actualPresenter
   }()
   
 }
