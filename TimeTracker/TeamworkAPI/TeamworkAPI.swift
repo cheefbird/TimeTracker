@@ -50,6 +50,7 @@ extension TeamworkAPI {
     
     case routingError(reason: String)
     case keyEncoderError(reason: String)
+    case responseError(code: Int)
     
   }
   

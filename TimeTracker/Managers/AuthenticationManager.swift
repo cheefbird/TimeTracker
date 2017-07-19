@@ -16,7 +16,8 @@ import RealmSwift
 class AuthenticationManager {
   
   // MARK: - Observable Properties
-  var status = Variable<String>("Login using your API key to continue.")
+  let helperText = Variable<String>("Login using your API key to continue.")
+  let authStatus = Variable<Bool>(false)
   
   // MARK: - Observable Methods
   
@@ -39,6 +40,11 @@ class AuthenticationManager {
     }
     
   }
+  
+//  func authAsData(key: String) -> Observable<User> {
+//    let user = RxAlamofire.request(TeamworkAPI.Router.authenticate(key))
+//      .responseJSON()
+//  }
   
   
   // MARK: - Helper

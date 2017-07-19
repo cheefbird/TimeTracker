@@ -37,6 +37,9 @@ class SettingsViewController: UIViewController {
     let storyboard = UIStoryboard(name: "Main", bundle: nil)
     let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
     
+    let authenticationManager = AuthenticationManager()
+    loginVC.authenticationManager = authenticationManager
+    
     self.present(loginVC, animated: true)
     
   }
