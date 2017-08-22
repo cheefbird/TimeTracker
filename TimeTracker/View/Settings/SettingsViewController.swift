@@ -8,17 +8,22 @@
 
 import UIKit
 import RealmSwift
+import RxSwift
+import RxCocoa
+
 
 class SettingsViewController: UIViewController {
   
   // MARK: - Outlets
   @IBOutlet weak var firstNameLabel: UILabel!
   @IBOutlet weak var lastNameLabel: UILabel!
+  @IBOutlet weak var logOutButton: UIButton!
   
   
   // MARK: - Properties
-  var user: User?
-  
+  var user: User!
+  var authManager: AuthenticationManager!
+  let disposeBag = DisposeBag()
   
   
   override func viewDidLoad() {
@@ -26,6 +31,13 @@ class SettingsViewController: UIViewController {
     
     firstNameLabel.text = user?.firstName ?? ""
     lastNameLabel.text = user?.lastName ?? ""
+    
+    logOutButton.rx.tap.asObservable()
+      .map { self.user }
+      .subscribe(onNext: { [weak self] user in
+        self?.authManager.logout(user)
+      })
+      .disposed(by: disposeBag)
     
   }
   
@@ -56,8 +68,8 @@ class SettingsViewController: UIViewController {
     
     user = savedUser
     
-    firstNameLabel.text = user?.firstName
-    lastNameLabel.text = user?.lastName
+    firstNameLabel.text = user.firstName
+    lastNameLabel.text = user.lastName
     
   }
   

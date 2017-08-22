@@ -147,6 +147,7 @@
                     <connections>
                         <outlet property="firstNameLabel" destination="7mY-3F-bBa" id="ZTe-NT-gG5"/>
                         <outlet property="lastNameLabel" destination="Kdn-aU-HWo" id="EbI-bs-y5p"/>
+                        <outlet property="logOutButton" destination="ngd-Kz-z6O" id="eXk-z5-zdN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

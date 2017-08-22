@@ -70,10 +70,22 @@ class AuthenticationManager {
       })
       .disposed(by: disposeBag)
     
+  }
+  
+  
+  func logout(_ user: User) {
     
+    let realm = try! Realm()
     
+    guard let user = realm.object(ofType: User.self, forPrimaryKey: "yes") else { return }
+    
+    try! realm.write {
+      realm.delete(user)
+    }
     
   }
+  
+  
   
   
   deinit {

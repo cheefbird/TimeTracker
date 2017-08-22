@@ -53,8 +53,8 @@ class LoginViewController: UIViewController {
           }
       })
       .disposed(by: disposeBag)
-    
   }
+  
   
   deinit {
     print("ALERT ** LoginViewController Deinitialized ** ALERT")
